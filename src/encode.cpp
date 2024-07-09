@@ -8,7 +8,7 @@ using namespace std;
 
 class Encode {
     public:
-       string encode(string input) {
+       string encode(string input, map<ulong, char> base64CharMapRev) {
             string base64;
             vector <string> base6;
 
@@ -45,7 +45,7 @@ class Encode {
 
                 bitset bits = bitset<6>(base6[i]);
 
-                final += Base64Maps::base64CharMapRev[(int) bits.to_ulong()];
+                final += base64CharMapRev[(int) bits.to_ulong()];
                 
             }
             

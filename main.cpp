@@ -61,7 +61,6 @@ class Main {
 
                     // Add the current set of 8 bits and then convert them to integers
                     base6.push_back(base6Tracking);
-                    cout << "tracking: " << base6Tracking << "\n";
 
                     base6Tracking = "";
                 }
@@ -75,17 +74,13 @@ class Main {
             string final;
             
             for (int i = 0; i < base6.size(); i++) {
-                cout << "base6: " << base6[i] << "\n";
 
                 bitset bits = bitset<6>(base6[i]);
-
-                cout << bits.to_ulong() << "\n";
 
                 final += base64CharMapRev[(int) bits.to_ulong()];
                 
             }
             
-
             return final;
         };
 
@@ -108,7 +103,6 @@ class Main {
 
                     // Add the current set of 8 bits and then convert them to integers
                     base8.push_back(base8Tracking);
-                    cout << "tracking: " << base8Tracking << "\n";
 
                     base8Tracking = "";
                 }
@@ -121,30 +115,57 @@ class Main {
             string final;
 
             for (int i = 0; i < base8.size(); i++) {
-                cout << "base8: " << base8[i] << "\n";
-
                 bitset bits = bitset<8>(base8[i]);
-
-                cout << bits.to_ulong() << "\n";
 
                 final += (char) bits.to_ulong();
             }
 
             return final;
         }
+
+        void clearScreen() {
+            cout << "\033[2J\033[1;1H";
+        }
 };
 
 int main() {
     Main main;
 
-    cout << "-----------------------";
+    int input;
 
-    string input;
+    main.clearScreen();
 
-    cout << "Input a string please: ";
+    cout << "----------------------------------------------\n";
+
+    cout << "Please choose one of the following options:\n[1] String Encoding\n[2] String Decoding\n";
 
     cin >> input;
 
-    cout << "final: " + main.decode(input);
+    main.clearScreen();
+
+    string text;
+
+
+    switch (input)
+    {
+    case 1:
+        cout << "Input a string to encode please: ";
+
+        cin >> text;
+
+        cout << main.encode(text);
+        break;
+    case 2:
+        cout << "Input a string to decode please: ";
+
+        cin >> text;    
+
+        cout << main.decode(text);
+        break;
+    default:
+        cout << "That's not an option!";
+        break;
+    };
+
 
 }

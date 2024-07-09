@@ -8,6 +8,7 @@ using namespace std;
 class Main {
     public:
         map<char, int> base64CharMap;
+        map<ulong, char> base64CharMapRev;
         
         Main() {
             // Map 'A' to 'Z' (0-25)
@@ -33,55 +34,75 @@ class Main {
             // Map '/' to 63
             base64CharMap['/'] = 63;
 
+
+            for (const auto &key : base64CharMap) {
+                // This reverses the map for encoding stuff, wahoo
+                base64CharMapRev[base64CharMap[key.first]] = key.first;
+            }
+
             // Output the map for verification
-            // for (const auto& pair : base64CharMap) {
-            //     std::cout << pair.first << " : " << pair.second << std::endl;
-            // }
+            for (const auto& key : base64CharMap) {
+                std::cout << key.first << " : " << key.second << std::endl;
+            }
+
+            for (const auto& key : base64CharMapRev) {
+                std::cout << key.first << " : " << key.second << std::endl;
+            }
         }
 
         string encode(string input) {
             string base64;
-            vector <int> base8;
+            vector <string> base6;
 
             // Keeps track of the currently watched 8 bits
-            string base8Tracking;
+            string base6Tracking;
 
             for (int i = 0; i < input.length(); i++)
             {
-                base64 += bitset<6>(base64CharMap[input[i]]).to_string();
+                base64 += bitset<8>(int(input[i])).to_string();
+                cout << int(input[i]) << ": " << base64 << "\n";
             }
 
 
 
-            for (int i = 1; i <= base64.length(); i++) {
+            for (int i = 0; i < base64.length(); i++) {
                 // cout << base64[i];
 
                 // base64 = i % 8 == 0? base64.replace(i, 8, "") : base64;
-                base8Tracking += base64[i];
+                base6Tracking += base64[i];
 
-                if (i % 8 == 0) {
+                if ((i+1) % 6 == 0 || base64.length() - 1 == i) {
                     // cout << "\n";
                     // Add the current set of 8 bits and then convert them to integers
-                    base8.push_back(stoi(base8Tracking));
-                    base8Tracking = "";
+                    base6.push_back(base6Tracking);
+                    cout << "tracking: " << base6Tracking << "\n";
+
+                    base6Tracking = "";
                 }
+            }
 
-                // cout << "New: " << base64;
+            string final;
+            
+            for (int i = 0; i < base6.size(); i++) {
+                cout << "base6: " << base6[i] << "\n";
+
+                bitset bits = bitset<6>(base6[i]);
+
+                cout << bits.to_ulong() << "\n";
+
+                final += base64CharMapRev[(int) bits.to_ulong()];
+                
             }
             
-            for (int i = 0; i < base8.size(); i++) {
 
-                cout << bitset<8>(base8[i]).to_ulong() << "\n";
-
-            }
-            
-
-            return base64;
+            return final;
         };
 };
 
 int main() {
     Main main;
+
+
 
     string input;
 
@@ -89,6 +110,6 @@ int main() {
 
     cin >> input;
 
-    main.encode(input);
+    cout << main.encode(input);
 
 }

@@ -41,13 +41,13 @@ class Main {
             }
 
             // Output the map for verification
-            for (const auto& key : base64CharMap) {
-                std::cout << key.first << " : " << key.second << std::endl;
-            }
+            // for (const auto& key : base64CharMap) {
+            //     std::cout << key.first << " : " << key.second << std::endl;
+            // }
 
-            for (const auto& key : base64CharMapRev) {
-                std::cout << key.first << " : " << key.second << std::endl;
-            }
+            // for (const auto& key : base64CharMapRev) {
+            //     std::cout << key.first << " : " << key.second << std::endl;
+            // }
         }
 
         string encode(string input) {
@@ -81,6 +81,12 @@ class Main {
                 }
             }
 
+            // Adds zeros to the end until it is 6 characters long
+            while(base6[base6.size()-1].length() != 6) {
+                base6[base6.size()-1] += "0";
+            }
+            
+
             string final;
             
             for (int i = 0; i < base6.size(); i++) {
@@ -110,6 +116,6 @@ int main() {
 
     cin >> input;
 
-    cout << main.encode(input);
+    cout << "final: " << main.encode(input);
 
 }

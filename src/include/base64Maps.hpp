@@ -3,8 +3,8 @@
 
 class Base64Maps {
     public:
-        static std::map<char, int> base64CharMap;
-        static std::map<ulong, char> base64CharMapRev;
+        std::map<char, int> base64CharMap;
+        std::map<ulong, char> base64CharMapRev;
         
         Base64Maps() {
             // Map 'A' to 'Z' (0-25)
@@ -36,3 +36,5 @@ class Base64Maps {
             }
         };
 };
+
+Base64Maps base64Maps;

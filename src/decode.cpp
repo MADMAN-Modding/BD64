@@ -7,7 +7,7 @@
 using namespace std;
 class Decode {
     public:
-        string decode(string input, map<char, int> base64CharMap) {
+        string decode(string input) {
             string base64;
             vector <string> base8;
 
@@ -15,7 +15,7 @@ class Decode {
             string base8Tracking;
 
             for (int i = 0; i < input.length(); i++) {
-                base64 += bitset<6>(base64CharMap[input[i]]).to_string();
+                base64 += bitset<6>(base64Maps.base64CharMap[input[i]]).to_string();
             }
 
             for (int i = 0; i < base64.length(); i++) {
@@ -43,9 +43,5 @@ class Decode {
             }
 
             return final;
-        }
-
-        void clearScreen() {
-            cout << "\033[2J\033[1;1H";
         }
 };

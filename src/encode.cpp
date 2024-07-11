@@ -17,6 +17,7 @@ class Encode {
 
             for (int i = 0; i < input.length(); i++)
             {
+                // For each of the characters in the string it will get their int value, convert that to 8-bit binary, and then append it to the base64 string
                 base64 += bitset<8>(int(input[i])).to_string();
             }
 
@@ -25,11 +26,13 @@ class Encode {
             for (int i = 0; i < base64.length(); i++) {
                 base6Tracking += base64[i];
 
+                // For every 6 characters and them to the base6 vector, or if its the end of the string
                 if ((i+1) % 6 == 0 || base64.length() - 1 == i) {
 
                     // Add the current set of 8 bits and then convert them to integers
                     base6.push_back(base6Tracking);
 
+                    // Reset the tracker
                     base6Tracking = "";
                 }
             }
@@ -39,8 +42,10 @@ class Encode {
                 base6[base6.size()-1] += "0";
             }
             
+            // String to be returned
             string final;
             
+            // This loop converts all the base6 string to their respective character on the base64 map, then it appends them to the final string
             for (int i = 0; i < base6.size(); i++) {
 
                 bitset bits = bitset<6>(base6[i]);

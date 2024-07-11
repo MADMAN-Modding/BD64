@@ -33,13 +33,19 @@ int main()
             if (command == "encode") {
                 std::string text = std::get<std::string>(event.get_parameter("input"));
 
+                std::string extra = std::get<bool>(event.get_parameter("show_original")) ? text + " in base 64 is: " : "";
                 
-                
-                event.reply(text + " in base64 is: " + encode(text));
+                int ephemeral = std::get<bool>(event.get_parameter("hidden")) ? dpp::m_ephemeral : dpp::m_put;
+
+                event.reply(dpp::message(extra + encode(text)).set_flags(ephemeral));
             } else if (command == "decode") {
                 std::string text = std::get<std::string>(event.get_parameter("input"));
                 
-                event.reply(text + " from base64 is: " + decode(text));          
+                std::string extra = std::get<bool>(event.get_parameter("show_original")) ? text + " from base 64 is: " : "";
+
+                int ephemeral = std::get<bool>(event.get_parameter("hidden")) ? dpp::m_ephemeral : dpp::m_put;
+
+                event.reply(dpp::message(extra + decode(text)).set_flags(ephemeral));          
             } else {
                 event.reply("Something went wrong");
             }
@@ -49,7 +55,7 @@ int main()
                  {
                      if (dpp::run_once<struct register_bot_commands>())
                      {
-                        // // Wipe current commands
+                        // Wipe current commands
                         // bot.global_bulk_command_delete();
 
                         dpp::slashcommand encode("encode", "Enter text to encode", bot.me.id);
@@ -57,10 +63,16 @@ int main()
 
                         encode.add_option(
                             dpp::command_option(dpp::co_string, "input", "The text to encode", true));
+                        encode.add_option(dpp::command_option(dpp::co_boolean, "show_original", "Show the original text?", true));
+
+                        encode.add_option(dpp::command_option(dpp::co_boolean, "hidden", "Keep the response hidden to you?", false)); 
                         
                         decode.add_option(
                             dpp::command_option(dpp::co_string, "input", "The text to decode", true));
+                        decode.add_option(
+                            dpp::command_option(dpp::co_boolean, "show_original", "Show the original text?", true));
 
+                        decode.add_option(dpp::command_option(dpp::co_boolean, "hidden", "Keep the response hidden to you?", false)); 
 
                         bot.global_command_create(encode);
                         bot.global_command_create(decode);

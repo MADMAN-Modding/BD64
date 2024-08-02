@@ -4,7 +4,7 @@
 <h2><a href="https://discord.com/oauth2/authorize?client_id=1260294204374909010" target="_blank">Bot Invite</a></h2>
 
 <h2>Setup</h2>
-<p>One file that you must make is the private.hpp file, stored in src/include.private.hpp</p>
+<p>One file that you must make is the private.hpp file, stored in src/include/private.hpp</p>
 <p>Add the following to the file</p>
 
     #include <iostream>

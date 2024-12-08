@@ -1,5 +1,7 @@
 main
-.vscode/*
+.vscode
 build/*
 private.hpp
 bot
+build
+.cache

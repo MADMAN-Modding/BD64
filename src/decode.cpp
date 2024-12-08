@@ -47,6 +47,6 @@ class Decode {
                 final += (char) bits.to_ulong();
             }
 
-            return final;
+            return "```" + final + "```";
         }
 };

@@ -12,7 +12,7 @@ class Encode {
             string base64;
             vector <string> base6;
 
-            // Keeps track of the currently watched 8 bits
+            // Keeps track of the currently watched 6 bits
             string base6Tracking;
 
             for (int i = 0; i < input.length(); i++)
@@ -54,6 +54,6 @@ class Encode {
                 
             }
             
-            return final;
+            return "```" + final + "```";
         };
 };
